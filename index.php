@@ -4,7 +4,7 @@
   Plugin URI: http://eventespresso.com/
   Description: s2Member integration for Event Espresso <a href="admin.php?page=support" >Support</a>
 
-  Version: 0.1-ALPHA
+  Version: 1.0-BETA
 
   Author: Event Espresso
   Author URI: http://www.eventespresso.com
@@ -29,7 +29,7 @@
 //Define the version of the plugin
 function espresso_s2member_version() {
 	do_action('action_hook_espresso_log', __FILE__, __FUNCTION__, '');
-	return '0.1-ALPHA';
+	return '1.0-BETA';
 }
 
 //Get the member level for a user
