@@ -32,6 +32,7 @@ function espresso_s2member_version() {
 	return '0.1-ALPHA';
 }
 
+//Get the member level for a user
 function espresso_s2member_level() {
 	$current_user = wp_get_current_user();
 	if($current_user->has_cap("s2member_level1"))
@@ -45,7 +46,8 @@ function espresso_s2member_level() {
 	return 0;
 }
 
-function espresso_s2member_level_check($member) {
+//Gets the s2member threshold
+function espresso_s2member_threshold($member) {
 	$member_options = get_option('events_member_settings');
 	$S2 = $member_options['S2_option'];
 	$threshold = $member_options['S2_threshold'];
@@ -58,8 +60,9 @@ function espresso_s2member_level_check($member) {
 	}
 	return $member;
 }
-add_filter( 'filter_hook_espresso_above_member_threshold', 'espresso_s2member_level_check', 10, 1 );
+add_filter( 'filter_hook_espresso_above_member_threshold', 'espresso_s2member_threshold', 10, 1 );
 
+//Filter to add keys and values to the $member_options array
 function espresso_s2member_save_member_settings($member_options) {
 	$member_options['S2_option'] = isset($_POST['S2_option']) && !empty($_POST['S2_option']) ? $_POST['S2_option'] : '';
 	$member_options['S2_threshold'] = isset($_POST['S2_threshold']) && !empty($_POST['S2_threshold']) ? $_POST['S2_threshold'] : '';
@@ -67,6 +70,7 @@ function espresso_s2member_save_member_settings($member_options) {
 }
 add_filter( 'filter_hook_espresso_save_member_settings', 'espresso_s2member_save_member_settings', 10, 1 );
 
+//Create a section in the settings page
 function espresso_s2member_settings() {
 	$member_options = get_option('events_member_settings');
 	$S2_option = empty($member_options['S2_option']) ? FALSE : $member_options['S2_option'];
