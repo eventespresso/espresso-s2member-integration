@@ -4,7 +4,7 @@
   Plugin URI: http://eventespresso.com/
   Description: s2Member integration for Event Espresso <a href="admin.php?page=support" >Support</a>
 
-  Version: 1.0-BETA
+  Version: 1.0.b
 
   Author: Event Espresso
   Author URI: http://www.eventespresso.com
@@ -29,7 +29,7 @@
 //Define the version of the plugin
 function espresso_s2member_version() {
 	do_action('action_hook_espresso_log', __FILE__, __FUNCTION__, '');
-	return '1.0-BETA';
+	return '1.0.b';
 }
 
 //Get the member level for a user
@@ -111,13 +111,18 @@ function ee_s2member_load_pue_update() {
 		require(EVENT_ESPRESSO_PLUGINFULLPATH . 'class/pue/pue-client.php' );
 		$api_key = $org_options['site_license_key'];
 		$host_server_url = 'http://eventespresso.com';
-		$plugin_slug = 'espresso-s2member-pr';
+		$plugin_slug = array(
+			'premium' => array('p', 'espresso-s2member'),
+			'prerelease' => array('b', 'espresso-s2member-pr')
+			);
 		$options = array(
 			'apikey' => $api_key,
 			'lang_domain' => 'event_espresso',
 			'checkPeriod' => '24',
 			'option_key' => 'site_license_key',
-			'options_page_slug' => 'event_espresso'
+			'options_page_slug' => 'event_espresso',
+			'plugin_basename' => plugin_basename(dirname(__FILE__)),
+			'use_wp_update' => FALSE, //if TRUE then you want FREE versions of the plugin to be updated from WP
 		);
 		$check_for_updates = new PluginUpdateEngineChecker($host_server_url, $plugin_slug, $options); //initiate the class and start the plugin update engine!
 	}
