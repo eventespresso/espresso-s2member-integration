@@ -112,7 +112,10 @@ function ee_s2member_load_pue_update() {
 		$api_key = $org_options['site_license_key'];
 		$host_server_url = 'http://eventespresso.com';
 		$plugin_slug = array(
-			'premium' => array('p' => 'espresso-s2member'),
+			// remove following line when releasing this version to stable
+			'premium' => array('b' => 'espresso-s2member-pr'),
+			// uncomment following line when releasing this version to stable
+			// 'premium' => array('p' => 'espresso-s2member'),
 			'prerelease' => array('b' => 'espresso-s2member-pr')
 			);
 		$options = array(
