@@ -34,16 +34,7 @@ function espresso_s2member_version() {
 
 //Get the member level for a user
 function espresso_s2member_level() {
-	$current_user = wp_get_current_user();
-	if($current_user->has_cap("s2member_level1"))
-		return 1;
-	if($current_user->has_cap("s2member_level2"))
-		return 2;
-	if($current_user->has_cap("s2member_level3"))
-		return 3;
-	if($current_user->has_cap("s2member_level4"))
-		return 4;
-	return 0;
+	return get_user_field("s2member_access_level");
 }
 
 //Gets the s2member threshold
@@ -75,6 +66,7 @@ function espresso_s2member_settings() {
 	$member_options = get_option('events_member_settings');
 	$S2_option = empty($member_options['S2_option']) ? FALSE : $member_options['S2_option'];
 	$S2_threshold = empty($member_options['S2_threshold']) ? 1 : $member_options['S2_threshold'];
+	$max_level = defined("MEMBERSHIP_LEVELS") ? MEMBERSHIP_LEVELS : 4;
 	?>
 	<li>
 		<label><?php _e('Use S2 member level threshold? ', 'event_espresso'); ?></label>
@@ -88,11 +80,10 @@ function espresso_s2member_settings() {
 	<li>
 		<label><?php _e('S2 member threshold? ', 'event_espresso'); ?></label>
 		<?php
-		$values = array(
-			array('id' => 1, 'text' => __('1', 'event_espresso')),
-			array('id' => 2, 'text' => __('2', 'event_espresso')),
-			array('id' => 3, 'text' => __('3', 'event_espresso')),
-			array('id' => 4, 'text' => __('4', 'event_espresso')));
+		$values = array();
+		for ($x=1; $x<=$max_level; $x++) {
+			$values[] = array('id' => $x, 'text' => $x);
+		}
 		echo select_input('S2_threshold', $values, $S2_threshold);
 		?>
 	</li>
